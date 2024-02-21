@@ -77,23 +77,24 @@ char *strchr(const char *str, int character){
 
 char* strsep(char** stringp, const char* delim){
     char* ret = NULL;
-    if (stringp) {
+    if (*stringp) {
 	char* begin = *stringp;
 	// char* ret = NULL;
 	for (int i = 0; delim[i] != '\0'; i++) {
 		char* p = begin;
-		p = strchr(p, delim[i]);
+		p = strchr(p, (int)delim[i]);
 		if ((ret == NULL) || (p && p < ret)) {
 			ret = p;
 		}	
 	}
 	if (ret) {
 	   	*ret = '\0';
-		// *stringp = ret;
+		char* tmp = ret + 1;
+		ret = *stringp;
+		*stringp = tmp;
+	} else {
+		*stringp = NULL;
 	}
-	char * tmp = ret;
-	ret = *stringp;
-	*stringp = tmp + 1;
    }
    return ret; 
 }
