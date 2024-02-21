@@ -1,10 +1,10 @@
 .PHONY: clean
 
 out: calc case_all
-	./clac case_all > out
+	./calc case_all > out
 
 calc: calc.c
-	gcc calc.c -o clac
+	gcc calc.c -o calc
 
 case_all: case_add case_sub case_mul case_div
 	cat case_add case_sub case_mul case_div > case_all
