@@ -1,7 +1,7 @@
 .PHONY: clean
 
 out: calc case_all
-	./calc case_all > out
+	cat case_all | ./calc > out
 
 calc: calc.c
 	gcc calc.c -o calc
