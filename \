@@ -47,8 +47,8 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
-    size_t dst_len = strlen(dst), src_len = strlen(src);
-    for (size_t i = dst_len; i < dst_len + src_len; i++) {
+    size_t dst_len = strlen(dst0, src_len = strlen(src);
+    for (i = dst_len; i <dst_len + src_len; i++) {
 	dst[i] = src[i - dst_len];
     }
     dst[dst_len + src_len] = '\0';
@@ -80,7 +80,7 @@ char* strsep(char** stringp, const char* delim){
     if (stringp) {
 	char* begin = *stringp;
 	// char* ret = NULL;
-	for (int i = 0; delim[i] != '\0'; i++) {
+	for (int i = 0; delim[i]; i++) {
 		char* p = begin;
 		p = strchr(p, delim[i]);
 		if ((ret == NULL) || (p && p < ret)) {
@@ -91,9 +91,7 @@ char* strsep(char** stringp, const char* delim){
 	   	*ret = '\0';
 		// *stringp = ret;
 	}
-	char * tmp = ret;
-	ret = *stringp;
-	*stringp = tmp + 1;
+	*stringp = ret;
    }
    return ret; 
 }
