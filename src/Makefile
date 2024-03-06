@@ -1,5 +1,5 @@
-make all:
+all:
 	gcc palindrome.c -o main
 
-make clean:
+clean:
 	rm main
