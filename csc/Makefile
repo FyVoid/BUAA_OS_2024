@@ -1,5 +1,5 @@
 all: ./code/fibo.o ./code/main.o
-	gcc code/fibo.o code/main.o -o main
+	gcc code/fibo.o code/main.o -o fibo
 
 ./code/fibo.o:
 	gcc -c ./code/fibo.c -o ./code/fibo.o -I include

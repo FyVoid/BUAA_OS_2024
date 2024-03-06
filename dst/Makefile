@@ -1,5 +1,5 @@
 all:
-	gcc palindrome.c -o main
+	gcc palindrome.c -o palindrome
 
 clean:
-	rm main
+	rm palindrome
