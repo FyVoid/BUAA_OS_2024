@@ -2,7 +2,7 @@ mkdir test
 cp -r code test
 cat ./code/14.c
 i=0
-while [ $i -le 14 ]
+while [ $i -le 15 ]
 do
 	gcc -c ./test/code/$i.c -o ./test/code/$i.o
 	let i++
