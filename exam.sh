@@ -8,7 +8,7 @@ do
 	let i++
 done
 
-gcc ./test/code *.o -o test/hello
+gcc ./test/code/*.o -o test/hello
 ./test/hello 2> .test/err.txt
 mv test/err.txt ./err.txt
 chmod rw-r-xr-x err.txt
