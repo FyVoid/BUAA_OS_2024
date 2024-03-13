@@ -25,4 +25,4 @@ then
 	n=$[$1+$2]
 fi
 command="$n""p"
-sed -n $command err.txt >&2
+# sed -n $command err.txt >&2
