@@ -40,7 +40,12 @@ elif [ ! -z "$CMD" ]; then
     cat $FILE | grep $CMD
 elif [ ! -z $PID ]; then
     # Your code here. (3/3)
-    :
+    out=$(awk -v input=$PID '$PID==$3 {print $3}')
+    while [ out -ne "" ]
+	    do
+		    out=$(awk -v input=$out '$out==$3 {print $3}')
+		    echo $out
+		done
 else
     usage
     exit 1
