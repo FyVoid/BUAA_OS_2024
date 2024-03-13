@@ -24,4 +24,4 @@ if [ $# -le 2 ]
 then
 	n=$[$1+$2]
 fi
-sed -n "$np" >&2
+sed -n "$(n)p" >&2
