@@ -24,4 +24,4 @@ if [ $# -ge 2 ]
 then
 	n=$[$1+$2]
 fi
-sed -n "'$(n)p'" err.txt >&2
+# sed -n "'$(n)p'" err.txt >&2
