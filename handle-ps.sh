@@ -37,7 +37,7 @@ if $SORT; then
     sort -k4nr -k2n $FILE
 elif [ ! -z "$CMD" ]; then
     # Your code here. (2/3)
-    :
+    cat $FILE | grep $CMD
 elif [ ! -z $PID ]; then
     # Your code here. (3/3)
     :
