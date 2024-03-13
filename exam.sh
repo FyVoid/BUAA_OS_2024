@@ -9,8 +9,8 @@ do
 done
 
 gcc ./test/code/*.o -o test/hello
-./test/hello 2> .test/err.txt
-mv test/err.txt ./err.txt
+./test/hello 2> .test/code/err.txt
+mv test/code/err.txt test/err.txt
 chmod rw-r-xr-x err.txt
 if [ $# -eq 0 ]
 then
