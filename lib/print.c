@@ -15,17 +15,23 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 	int neg_flag;  // output is negative
 	int ladjust;   // output is left-aligned
 	char padc;     // padding char
+	
+	#define BUFFER_SIZE 256
+	char buffer[BUFFER_SIZE];
+	int buffer_ptr;
 
 	for (;;) {
 		/* scan for the next '%' */
 		/* Exercise 1.4: Your code here. (1/8) */
-		int offset = 0;
-		while (*(fmt + offset) != '%' && *(fmt + offset) != '\0') {
-			offset++;
+		buffer_ptr = 0;
+		while (*(fmt) != '%' && *(fmt) != '\0') {
+			buffer[buffer_ptr++] = *fmt;
+			fmt++;
 		}
+		buffer[buffer_ptr] = '\0';
 		/* flush the string found so far */
 		/* Exercise 1.4: Your code here. (2/8) */
-		print_str(out, data, fmt, offset, 0);
+		print_str(out, data, buffer, 0, 0);
 		/* check "are we hitting the end?" */
 		/* Exercise 1.4: Your code here. (3/8) */
 		if (*fmt == '\0') return;
