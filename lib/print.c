@@ -16,28 +16,52 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 	int ladjust;   // output is left-aligned
 	char padc;     // padding char
 
+	#define BUFFER_SIZE 256
+	char buffer[BUFFER_SIZE];
+	int buffer_ptr = 0;
+
 	for (;;) {
 		/* scan for the next '%' */
 		/* Exercise 1.4: Your code here. (1/8) */
-
+		while (*fmt != '%' && *fmt != '\0') {
+			buffer[buffer_ptr++] = *fmt;
+			fmt++;
+		}
 		/* flush the string found so far */
 		/* Exercise 1.4: Your code here. (2/8) */
-
+		print_str(out, data, buffer, BUFFER_SIZE, 0);
 		/* check "are we hitting the end?" */
 		/* Exercise 1.4: Your code here. (3/8) */
-
+		if (*fmt == '\0') return;
 		/* we found a '%' */
 		/* Exercise 1.4: Your code here. (4/8) */
-
+		fmt++;
 		/* check format flag */
 		/* Exercise 1.4: Your code here. (5/8) */
-
+		padc = ' ';
+		ladjust = 0;
+		if (*fmt == '-') {
+			ladjust = 1;
+			fmt++;
+		} else if (*fmt == '0') {
+			padc = '0';
+			fmt++;
+		}
 		/* get width */
 		/* Exercise 1.4: Your code here. (6/8) */
-
+		width = 0;
+		while (*fmt >= '0' && *fmt <= '9') {
+			width *= 10;
+			width += *fmt - '0';
+			fmt++;
+		}
 		/* check for long */
 		/* Exercise 1.4: Your code here. (7/8) */
-
+		long_flag = 0;
+		if (*fmt == 'l') {
+			long_flag = 1;
+			fmt++;
+		}
 		neg_flag = 0;
 		switch (*fmt) {
 		case 'b':
@@ -63,7 +87,8 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 			 * others. (hint: 'neg_flag').
 			 */
 			/* Exercise 1.4: Your code here. (8/8) */
-
+			if (num < 0) neg_flag = 1;
+			print_num(out, data, num, 10, neg_flag, width, ladjust, padc, 0);
 			break;
 
 		case 'o':
