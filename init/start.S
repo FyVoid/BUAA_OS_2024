@@ -26,5 +26,5 @@ clear_bss_done:
 	li		sp, USTACKTOP
 	/* jump to mips_init */
 	/* Exercise 1.3: Your code here. (2/2) */
-	j		mips_init				# jump to mips_init
+	j		mips_init				
 	
