@@ -23,10 +23,12 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 	for (;;) {
 		/* scan for the next '%' */
 		/* Exercise 1.4: Your code here. (1/8) */
+		buffer_ptr = 0;
 		while (*fmt != '%' && *fmt != '\0') {
 			buffer[buffer_ptr++] = *fmt;
 			fmt++;
 		}
+		buffer[buffer_ptr] = '\0';
 		/* flush the string found so far */
 		/* Exercise 1.4: Your code here. (2/8) */
 		print_str(out, data, buffer, BUFFER_SIZE, 0);
