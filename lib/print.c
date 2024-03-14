@@ -18,13 +18,13 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 
 	#define BUFFER_SIZE 256
 	char buffer[BUFFER_SIZE];
-	int buffer_ptr = 0;
+	int buffer_ptr;
 
 	for (;;) {
 		/* scan for the next '%' */
 		/* Exercise 1.4: Your code here. (1/8) */
 		buffer_ptr = 0;
-		while (*fmt != '%' || *fmt != '\0') {
+		while (*fmt != '%' && *fmt != '\0') {
 			buffer[buffer_ptr++] = *fmt;
 			fmt++;
 		}
