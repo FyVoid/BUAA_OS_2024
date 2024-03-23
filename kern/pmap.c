@@ -98,7 +98,7 @@ void page_init(void) {
 
 	/* Step 2: Align `freemem` up to multiple of PAGE_SIZE. */
 	/* Exercise 2.3: Your code here. (2/4) */
-	printk("freemem: %ld", freemem);
+	printk("freemem: %ld", freemem / 1024);
 	freemem = ROUND(freemem, PAGE_SIZE);
 
 	/* Step 3: Mark all memory below `freemem` as used (set `pp_ref` to 1) */
