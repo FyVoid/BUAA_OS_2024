@@ -94,16 +94,23 @@ void page_init(void) {
 	/* Step 1: Initialize page_free_list. */
 	/* Hint: Use macro `LIST_INIT` defined in include/queue.h. */
 	/* Exercise 2.3: Your code here. (1/4) */
+	LIST_INIT(&page_free_list);
 
 	/* Step 2: Align `freemem` up to multiple of PAGE_SIZE. */
 	/* Exercise 2.3: Your code here. (2/4) */
+	freemem = ROUND(freemem, PAGE_SIZE);
 
 	/* Step 3: Mark all memory below `freemem` as used (set `pp_ref` to 1) */
 	/* Exercise 2.3: Your code here. (3/4) */
+	for (int i = 0; i * PAGE_SIZE < freemem; i++) 
+		pages[i].pp_ref = 1;
 
 	/* Step 4: Mark the other memory as free. */
 	/* Exercise 2.3: Your code here. (4/4) */
-
+	for (int i = freemem / PAGE_SIZE; i * PAGE_SIZE < memsize; i++) {
+		pages[i].pp_ref = 1;
+		LIST_INSERT_HEAD(&page_free_list, pages + i, pp_link);
+	}
 }
 
 /* Overview:
