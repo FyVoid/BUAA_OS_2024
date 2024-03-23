@@ -248,7 +248,7 @@ int page_insert(Pde *pgdir, u_int asid, struct Page *pp, u_long va, u_int perm) 
 	/* Step 4: Insert the page to the page table entry with 'perm | PTE_C_CACHEABLE | PTE_V'
 	 * and increase its 'pp_ref'. */
 	/* Exercise 2.7: Your code here. (3/3) */
-	pp->pp_ref++;
+	(pp->pp_ref)++;
 	*pte = page2pa(pp) | perm | PTE_C_CACHEABLE | PTE_V;
 
 	return 0;
