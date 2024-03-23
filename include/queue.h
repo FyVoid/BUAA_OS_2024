@@ -112,13 +112,13 @@
  * Step 3: assign 'listelm.next' from a proper value.
  * Step 4: assign 'elm.pre' from a proper value.
  */
-#define LIST_INSERT_AFTER(listelm, elm, field)
-	do {
-		LIST_NEXT((elm), field) = LIST_NEXT((listelm, field));
-		LIST_NEXT((listelm), field) ? *(LIST_NEXT((listelm), field)->field.le_prev) = (elm) : 0;
-		LIST_NEXT((listelm), field) = (elm);
-		*((elm)->field.le_prev) = (listelm);
-	} while (0)
+#define LIST_INSERT_AFTER(listelm, elm, field)														\
+	do {																							\
+		LIST_NEXT((elm), field) = LIST_NEXT((listelm, field));										\
+		LIST_NEXT((listelm), field) ? *(LIST_NEXT((listelm), field)->field.le_prev) = (elm) : 0;	\
+		LIST_NEXT((listelm), field) = (elm);														\
+		*((elm)->field.le_prev) = (listelm);														\
+	}
 
 /*
  * Insert the element "elm" *before* the element "listelm" which is
