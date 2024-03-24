@@ -236,6 +236,8 @@ int page_insert(Pde *pgdir, u_int asid, struct Page *pp, u_long va, u_int perm) 
 		}
 	}
 
+	printk("hello");
+
 	/* Step 2: Flush TLB with 'tlb_invalidate'. */
 	/* Exercise 2.7: Your code here. (1/3) */
 	tlb_invalidate(asid, va);
@@ -447,7 +449,6 @@ void page_check(void) {
 
 	// should be able to map pp2 at PAGE_SIZE because pp0 is already allocated for page table
 	assert(page_insert(boot_pgdir, 0, pp2, PAGE_SIZE, 0) == 0);
-	printk("hello");
 	assert(va2pa(boot_pgdir, PAGE_SIZE) == page2pa(pp2));
 	assert(pp2->pp_ref == 1);
 
