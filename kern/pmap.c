@@ -203,7 +203,7 @@ static int pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte) {
 
 	/* Step 3: Assign the kernel virtual address of the page table entry to '*ppte'. */
 	/* Exercise 2.6: Your code here. (3/3) */
-	*ppte = (Pte *) (KADDR((*pgdir_entryp & (~(0xfff)))) + PTX(va));
+	*ppte = (Pte *) (KADDR(*pgdir_entryp) + PTX(va));
 
 	return 0;
 }
@@ -235,8 +235,6 @@ int page_insert(Pde *pgdir, u_int asid, struct Page *pp, u_long va, u_int perm) 
 			return 0;
 		}
 	}
-
-	printk("hello");
 
 	/* Step 2: Flush TLB with 'tlb_invalidate'. */
 	/* Exercise 2.7: Your code here. (1/3) */
