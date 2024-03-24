@@ -445,6 +445,7 @@ void page_check(void) {
 	assert(va2pa(boot_pgdir, 0x0) == page2pa(pp1));
 	assert(pp1->pp_ref == 1);
 
+	printk("hello");
 	// should be able to map pp2 at PAGE_SIZE because pp0 is already allocated for page table
 	assert(page_insert(boot_pgdir, 0, pp2, PAGE_SIZE, 0) == 0);
 	assert(va2pa(boot_pgdir, PAGE_SIZE) == page2pa(pp2));
