@@ -88,21 +88,21 @@ void vprintfmt(fmt_callback_t out, void *data, const char *fmt, va_list ap) {
 				neg_flag = 1;
 				num_x = -num_x;
 			}
-			print_num(out, data, num, 10, neg_flag, width, ladjust, padc, 0);
+			print_num(out, data, num_x, 10, neg_flag, width, ladjust, padc, 0);
 			print_char(out, data, ',', 0, 0);
 			neg_flag = 0;
 			if (num_y < 0) {
 				neg_flag = 1;
 				num_y = -num_y;
 			}
-			print_num(out, data, num, 10, neg_flag, width, ladjust, padc, 0);
+			print_num(out, data, num_y, 10, neg_flag, width, ladjust, padc, 0);
 			print_char(out, data, ',', 0, 0);
 			neg_flag = 0;
 			if (num_z < 0) {
 				neg_flag = 1;
 				num_z = -num_z;
 			}
-			print_num(out, data, num, 10, neg_flag, width, ladjust, padc, 0);
+			print_num(out, data, num_z, 10, neg_flag, width, ladjust, padc, 0);
 			print_char(out, data, ')', 0, 0);
 
 			break;
