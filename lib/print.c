@@ -25,11 +25,18 @@ int vscanfmt(scan_callback_t in, void *data, const char *fmt, va_list ap) {
 				ip = va_arg(ap, int*);
 				num = 0;
 				base = 10;
+				neg = 0;
 				while (ch != ' ' && ch != '\t' && ch != '\n') {
+					if (ch == '-') {
+						neg = 1;
+						in(data, &ch, 1);
+						continue;
+					}
 					num *= base;
 					num += ch - '0';
 					in(data, &ch, 1);
 				}
+				if (neg) num = -num;
 				*ip = num;
 				ret++;
 				break;
@@ -38,11 +45,18 @@ int vscanfmt(scan_callback_t in, void *data, const char *fmt, va_list ap) {
 				ip = va_arg(ap, int*);
 				num = 0;
 				base = 16;
+				neg = 0;
 				while (ch != ' ' && ch != '\t' && ch != '\n') {
+					if (ch == '-') {
+						neg = 1;
+						in(data, &ch, 1);
+						continue;
+					}
 					num *= base;
 					num += (ch >= '0' && ch <= '9') ? ch - '0' : ch - 'a' + 10;
 					in(data, &ch, 1);
 				}
+				if (neg) num = -num;
 				*ip = num;
 				ret++;
 				break;
