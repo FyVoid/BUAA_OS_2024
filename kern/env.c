@@ -75,7 +75,6 @@ static void map_segment(Pde *pgdir, u_int asid, u_long pa, u_long va, u_int size
 		 */
 		/* Exercise 3.2: Your code here. */
 		page_insert(pgdir, asid, pa2page(pa + i), va + i, perm);
-		printk("insert");
 	}
 }
 
@@ -233,11 +232,15 @@ int env_alloc(struct Env **new, u_int parent_id) {
 
 	/* Step 1: Get a free Env from 'env_free_list' */
 	/* Exercise 3.4: Your code here. (1/4) */
+	if (LIST_EMPTY(&env_free_list)) {
+		return -E_NO_FREE_ENV;
+	}
 	e = LIST_FIRST(&env_free_list);
 
 	/* Step 2: Call a 'env_setup_vm' to initialize the user address space for this new Env. */
 	/* Exercise 3.4: Your code here. (2/4) */
-	env_setup_vm(e);
+	r = env_setup_vm(e);
+	if (r) return r;
 
 	/* Step 3: Initialize these fields for the new Env with appropriate values:
 	 *   'env_user_tlb_mod_entry' (lab4), 'env_runs' (lab6), 'env_id' (lab3), 'env_asid' (lab3),
@@ -251,7 +254,8 @@ int env_alloc(struct Env **new, u_int parent_id) {
 	e->env_runs = 0;	       // for lab6
 	/* Exercise 3.4: Your code here. (3/4) */
 	e->env_id = mkenvid(e);
-	asid_alloc(&(e->env_asid));
+	r = asid_alloc(&(e->env_asid));
+	if (r) return r;
 	e->env_parent_id = parent_id;
 
 	/* Step 4: Initialize the sp and 'cp0_status' in 'e->env_tf'.
