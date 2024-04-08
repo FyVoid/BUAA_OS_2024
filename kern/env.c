@@ -484,7 +484,7 @@ void env_run(struct Env *e) {
 	 *    returning to the kernel caller, making 'env_run' a 'noreturn' function as well.
 	 */
 	/* Exercise 3.8: Your code here. (2/2) */
-	env_pop_tf((struct Trapframe *)KSTACKTOP, curenv->env_asid);
+	env_pop_tf(curenv->env_tf, curenv->env_asid);
 
 }
 
