@@ -191,7 +191,7 @@ static int env_setup_vm(struct Env *e) {
 	try(page_alloc(&p));
 	/* Exercise 3.3: Your code here. */
 	p->pp_ref++;
-	e->env_pgdir = page2kva(p);
+	e->env_pgdir = (Pde *) page2kva(p);
 
 	/* Step 2: Copy the template page directory 'base_pgdir' to 'e->env_pgdir'. */
 	/* Hint:
