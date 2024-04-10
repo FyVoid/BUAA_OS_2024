@@ -31,6 +31,21 @@ void mips_detect_memory(u_int _memsize) {
 	printk("Memory size: %lu KiB, number of pages: %lu\n", memsize / 1024, npage);
 }
 
+u_int page_filter(Pde *pgdir, u_int va_lower_limit, u_int va_upper_limit, u_int num) {
+	u_int total = 0;
+	Pte *pte;
+	struct Page *pp;
+	for (u_int i = va_lower_limit; i < va_upper_limit; i += 4096) {
+		pp = page_lookup(pgdir, i, &pte);
+		// printk("%d", pp->pp_ref);
+		if (pp && (*pte & PTE_V) && (pp->pp_ref >= num)) {
+			total++;
+		}
+	}
+	// printk("%d", total);
+	return total;
+}
+
 /* Lab 2 Key Code "alloc" */
 /* Overview:
     Allocate `n` bytes physical memory with alignment `align`, if `clear` is set, clear the
