@@ -4,6 +4,9 @@
 #include <mmu.h>
 #include <pmap.h>
 #include <printk.h>
+#include <buddy.h>
+
+struct Page_list buddy_free_list[2];
 
 /* These variables are set by mips_detect_memory(ram_low_size); */
 static u_long memsize; /* Maximum physical address */
@@ -15,6 +18,46 @@ struct Page *pages;
 static u_long freemem;
 
 struct Page_list page_free_list; /* Free list of physical pages */
+
+void buddy_init() {
+	LIST_INIT(&buddy_free_list[0]);
+	LIST_INIT(&buddy_free_list[1]);
+	for (int i = BUDDY_PAGE_BASE; i < BUDDY_PAGE_END; i += PAGE_SIZE) {
+		struct Page *pp = pa2page(i);
+		LIST_REMOVE(pp, pp_link);
+	}
+	for (int i = BUDDY_PAGE_BASE; i < BUDDY_PAGE_END; i += 2 * PAGE_SIZE) {
+		struct Page *pp = pa2page(i);
+		LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
+	}
+}
+
+int buddy_alloc(u_int size, struct Page **new) {
+	/* Your Code Here (1/2) */
+	int s = size > 4096;
+	struct Page *pp;
+	if (!(LIST_EMPTY(&buddy_free_list[s]))) {
+		*new = LIST_FIRST(&buddy_free_list[s]);
+		LIST_REMOVE(*new, pp_link);
+		return s + 1;
+	} else {
+		if (s) {	// 8kb
+			return -E_NO_MEM;
+		} else {	// 4kb
+			if (LIST_EMPTY(&(buddy_free_list[1]))) return -E_NO_MEM;
+			pp = LIST_FIRST(&(buddy_free_list[1]));
+			LIST_REMOVE(pp, pp_link);
+			struct Page *buddy = pa2page(page2pa(pp) + PAGE_SIZE);
+			LIST_INSERT_HEAD(&buddy_free_list[0], buddy, pp_link);
+			*new = pp;
+			return 1;
+		}
+	}
+}
+
+void buddy_free(struct Page *pp, int npp) {
+	/* Your Code Here (2/2) */
+}
 
 /* Overview:
  *   Use '_memsize' from bootloader to initialize 'memsize' and
