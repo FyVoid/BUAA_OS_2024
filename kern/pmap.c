@@ -57,6 +57,18 @@ int buddy_alloc(u_int size, struct Page **new) {
 
 void buddy_free(struct Page *pp, int npp) {
 	/* Your Code Here (2/2) */
+	int s = npp - 1;
+	if (s) {	// 8kb
+		LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
+	} else {
+		struct Page *buddy = LIST_FIRST(&buddy_free_list[0]);
+		if (page2pa(buddy) - page2pa(pp) == 4096) {// found buddy
+			LIST_REMOVE(buddy, pp_link);
+			LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
+		} else {
+			LIST_INSERT_HEAD(&buddy_free_list[0], pp, pp_link);
+		}
+	}
 }
 
 /* Overview:
