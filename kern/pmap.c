@@ -67,7 +67,16 @@ void buddy_free(struct Page *pp, int npp) {
 		} else {
 			buddy = pa2page(page2pa(pp) - 4096);
 		}
-		if (LIST_NEXT(buddy, pp_link) || *(buddy->pp_link.le_prev)) {
+		int found = 0;
+		struct Page *p = LIST_FIRST(&buddy_free_list[0]);
+		while (p) {
+			if (page2pa(p) == page2pa(buddy)) {
+				found = 1;
+				break;
+			}
+			p = LIST_NEXT(p, pp_link);
+		}
+		if (found) {
 			LIST_REMOVE(buddy, pp_link);
 			LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
 		} else {
