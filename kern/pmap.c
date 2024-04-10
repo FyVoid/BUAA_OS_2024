@@ -62,7 +62,8 @@ void buddy_free(struct Page *pp, int npp) {
 		LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
 	} else {
 		struct Page *buddy;
-		if (page2pa(pp) / 4096 % 2 == 0) {
+		int type = ((page2pa(pp) / 4096) % 2) == 0;
+		if (type) {
 			buddy = pa2page(page2pa(pp) + 4096);
 		} else {
 			buddy = pa2page(page2pa(pp) - 4096);
@@ -78,7 +79,11 @@ void buddy_free(struct Page *pp, int npp) {
 		}
 		if (found) {
 			LIST_REMOVE(buddy, pp_link);
-			LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
+			if (type) {
+				LIST_INSERT_HEAD(&buddy_free_list[1], pp, pp_link);
+			} else {
+				LIST_INSERT_HEAD(&buddy_free_list[1], buddy, pp_link);
+				}
 		} else {
 			LIST_INSERT_HEAD(&buddy_free_list[0], pp, pp_link);
 		}
