@@ -102,11 +102,13 @@ void page_init(void) {
 
 	/* Step 3: Mark all memory below `freemem` as used (set `pp_ref` to 1) */
 	/* Exercise 2.3: Your code here. (3/4) */
-	for (u_long i = 0; i * PAGE_SIZE < PADDR(freemem); i++) 
+	// note that freemem here is virtual address, so that PADDR is used
+	for (u_long i = 0; i * PAGE_SIZE < PADDR(freemem); i++)
 		pages[i].pp_ref = 1;
 
 	/* Step 4: Mark the other memory as free. */
 	/* Exercise 2.3: Your code here. (4/4) */
+	// however here memsize is physical address, we don't need to use PADDR
 	for (u_long i = PADDR(freemem) / PAGE_SIZE; i * PAGE_SIZE < memsize; i++) {
 		pages[i].pp_ref = 0;
 		LIST_INSERT_HEAD(&page_free_list, pages + i, pp_link);
