@@ -142,8 +142,8 @@ int fork(void) {
 	 *   Child's TLB Mod user exception entry should handle COW, so set it to 'cow_entry'
 	 */
 	/* Exercise 4.15: Your code here. (2/2) */
-	syscall_set_tlb_mod_entry(child, cow_entry);
-	syscall_set_env_status(child, ENV_RUNNABLE);
+	try(syscall_set_tlb_mod_entry(child, cow_entry));
+	try(syscall_set_env_status(child, ENV_RUNNABLE));
 
 	return child;
 }
