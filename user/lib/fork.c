@@ -34,7 +34,7 @@ static void __attribute__((noreturn)) cow_entry(struct Trapframe *tf) {
 	/* Step 4: Copy the content of the faulting page at 'va' to 'UCOW'. */
 	/* Hint: 'va' may not be aligned to a page! */
 	/* Exercise 4.13: Your code here. (4/6) */
-	memcpy((void *) UCOW, ROUNDDOWN(va, PAGE_SIZE), PAGE_SIZE);
+	memcpy((void *) UCOW, ROUNDDOWN(va, sizeof(struct Page)), sizeof(struct Page));
 
 	// Step 5: Map the page at 'UCOW' to 'va' with the new 'perm'.
 	/* Exercise 4.13: Your code here. (5/6) */
