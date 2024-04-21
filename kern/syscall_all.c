@@ -406,7 +406,7 @@ int sys_ipc_try_send(u_int envid, u_int value, u_int srcva, u_int perm) {
 		/* Exercise 4.8: Your code here. (8/8) */
 		p = page_lookup(curenv->env_pgdir, srcva, NULL);
 		if (p == NULL) return -E_INVAL;
-		try(page_insert(curenv->env_pgdir, curenv->env_asid, &p, e->env_ipc_dstva, perm));
+		try(page_insert(curenv->env_pgdir, curenv->env_asid, p, e->env_ipc_dstva, perm));
 	}
 	return 0;
 }
