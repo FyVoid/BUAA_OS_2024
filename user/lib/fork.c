@@ -129,6 +129,11 @@ int fork(void) {
 	/* Step 3: Map all mapped pages below 'USTACKTOP' into the child's address space. */
 	// Hint: You should use 'duppage'.
 	/* Exercise 4.15: Your code here. (1/2) */
+	for (u_long i = 0; i < VPN(USTACKTOP); i++) {
+		if ((vpt[i] & PTE_V) && (vpd[i >> 10] & PTE_V)) {
+			duppage(child, i);
+		}
+	}
 
 	/* Step 4: Set up the child's tlb mod handler and set child's 'env_status' to
 	 * 'ENV_RUNNABLE'. */
@@ -137,6 +142,8 @@ int fork(void) {
 	 *   Child's TLB Mod user exception entry should handle COW, so set it to 'cow_entry'
 	 */
 	/* Exercise 4.15: Your code here. (2/2) */
+	syscall_set_tlb_mod_entry(child, cow_entry);
+	syscall_set_env_status(child, ENV_RUNNABLE);
 
 	return child;
 }
