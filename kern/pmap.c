@@ -195,7 +195,7 @@ static int pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte) {
 			if (page_alloc(&pp) != 0) return -E_NO_MEM;
 			pp->pp_ref = 1;
 			*pgdir_entryp = page2pa(pp) | PTE_V | PTE_C_CACHEABLE;
-			*ppte = page2kva(pp);
+			*ppte = (Pte *) page2kva(pp);
 		} else {
 			*ppte = NULL;
 			return 0;
