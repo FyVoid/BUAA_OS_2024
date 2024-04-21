@@ -404,7 +404,7 @@ int sys_ipc_try_send(u_int envid, u_int value, u_int srcva, u_int perm) {
 	/* Return -E_INVAL if 'srcva' is not zero and not mapped in 'curenv'. */
 	if (srcva != 0) {
 		/* Exercise 4.8: Your code here. (8/8) */
-		sys_mem_map(curenv->env_id, srcva, envid, e->env_ipc_dstva, perm);
+		try(sys_mem_map(curenv->env_id, srcva, envid, e->env_ipc_dstva, perm));
 	}
 	return 0;
 }
