@@ -15,7 +15,7 @@ struct Trapframe {
 	unsigned long lo;
 	unsigned long cp0_badvaddr;
 	unsigned long cp0_cause;
-	unsigned long cp0_epc;
+	unsigned long cp0_epc;		// PC addr when return to user program
 };
 
 void print_tf(struct Trapframe *tf);
