@@ -149,7 +149,7 @@ int sys_mem_alloc(u_int envid, u_int va, u_int perm) {
 
 	/* Step 3: Allocate a physical page using 'page_alloc'. */
 	/* Exercise 4.4: Your code here. (3/3) */
-	page_alloc(pp);
+	page_alloc(&pp);
 
 	/* Step 4: Map the allocated page at 'va' with permission 'perm' using 'page_insert'. */
 	return page_insert(env->env_pgdir, env->env_asid, pp, va, perm);
@@ -406,7 +406,7 @@ int sys_ipc_try_send(u_int envid, u_int value, u_int srcva, u_int perm) {
 		/* Exercise 4.8: Your code here. (8/8) */
 		p = page_lookup(curenv->env_pgdir, srcva, NULL);
 		if (p == NULL) return -E_INVAL;
-		
+
 		try(page_insert(e->env_pgdir, e->env_asid, p, e->env_ipc_dstva, perm));
 	}
 	return 0;
