@@ -21,7 +21,8 @@ static void __attribute__((noreturn)) cow_entry(struct Trapframe *tf) {
 	/* Hint: Use 'vpt' and 'VPN' to find the page table entry. If the 'perm' doesn't have
 	 * 'PTE_COW', launch a 'user_panic'. */
 	/* Exercise 4.13: Your code here. (1/6) */
-	if (!((perm = vpt[VPN(va)] & 0xfff) & PTE_COW)) user_panic("perm PTE_COW not set");
+	perm = PTE_FLAGS(vpt[VPN(va)]);
+	if (!(perm & PTE_COW)) user_panic("perm PTE_COW not set");
 
 	/* Step 2: Remove 'PTE_COW' from the 'perm', and add 'PTE_D' to it. */
 	/* Exercise 4.13: Your code here. (2/6) */
@@ -34,7 +35,7 @@ static void __attribute__((noreturn)) cow_entry(struct Trapframe *tf) {
 	/* Step 4: Copy the content of the faulting page at 'va' to 'UCOW'. */
 	/* Hint: 'va' may not be aligned to a page! */
 	/* Exercise 4.13: Your code here. (4/6) */
-	memcpy((void *) UCOW, ROUNDDOWN(va, sizeof(struct Page)), sizeof(struct Page));
+	memcpy((void *) UCOW, ROUNDDOWN(va, PAGE_SIZE), PAGE_SIZE);
 
 	// Step 5: Map the page at 'UCOW' to 'va' with the new 'perm'.
 	/* Exercise 4.13: Your code here. (5/6) */
