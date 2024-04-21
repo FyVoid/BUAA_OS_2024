@@ -262,6 +262,7 @@ int page_insert(Pde *pgdir, u_int asid, struct Page *pp, u_long va, u_int perm) 
     Look up the Page that virtual address `va` map to.
   Post-Condition:
     Return a pointer to corresponding Page, and store it's page table entry to *ppte.
+	ppte will be checked for NULL before storing, call with NULL will not fail
     If `va` doesn't mapped to any Page, return NULL.*/
 struct Page *page_lookup(Pde *pgdir, u_long va, Pte **ppte) {
 	struct Page *pp;
