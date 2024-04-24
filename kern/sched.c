@@ -37,8 +37,8 @@ void schedule(int yield) {
 	/* Exercise 3.12: Your code here. */
 	if (e) { 
 			e->runs++;
-			//struct Trapframe tf = *((struct Trapframe *)KSTACKTOP - 1);
-			//e->clocks += tf.cp0_count;
+			struct Trapframe tf = *((struct Trapframe *)KSTACKTOP - 1);
+			e->clocks += tf.cp0_count;
 	}
 	if (yield || count <= 0 || e == NULL || !(e->env_status == ENV_RUNNABLE)) {
 		if (e != NULL) {
