@@ -27,6 +27,11 @@ struct Env {
 	TAILQ_ENTRY(Env) env_sched_link; // intrusive entry in 'env_sched_list'
 	u_int env_pri;			 // schedule priority
 
+	// lab3 exam
+	u_int scheds;
+	u_int runs;
+	u_int clocks;
+
 	// Lab 4 IPC
 	u_int env_ipc_value;   // the value sent to us
 	u_int env_ipc_from;    // envid of the sender
@@ -40,6 +45,8 @@ struct Env {
 	// Lab 6 scheduler counts
 	u_int env_runs; // number of times we've been env_run'ed
 };
+
+void env_stat(struct Env *e, u_int *pri, u_int *scheds, u_int *runs, u_int *clocks);
 
 LIST_HEAD(Env_list, Env);
 TAILQ_HEAD(Env_sched_list, Env);

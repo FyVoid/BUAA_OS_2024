@@ -35,6 +35,11 @@ void schedule(int yield) {
 	 *   'TAILQ_FIRST', 'TAILQ_REMOVE', 'TAILQ_INSERT_TAIL'
 	 */
 	/* Exercise 3.12: Your code here. */
+	if (e) { 
+			e->runs++;
+			//struct Trapframe tf = *((struct Trapframe *)KSTACKTOP - 1);
+			//e->clocks += tf.cp0_count;
+	}
 	if (yield || count <= 0 || e == NULL || !(e->env_status == ENV_RUNNABLE)) {
 		if (e != NULL) {
 			TAILQ_REMOVE(&env_sched_list, e, env_sched_link);
@@ -45,7 +50,9 @@ void schedule(int yield) {
 		panic_on(TAILQ_EMPTY(&env_sched_list));
 		e = TAILQ_FIRST(&env_sched_list);
 		count = e->env_pri;
+		e->scheds++;
 	}
+	// e->runs++;
 	count--;
 	env_run(e);
 

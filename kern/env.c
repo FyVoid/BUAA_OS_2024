@@ -368,6 +368,11 @@ struct Env *env_create(const void *binary, size_t size, int priority) {
 	e->env_pri = priority;
 	e->env_status = ENV_RUNNABLE;
 
+	// lab3-exam
+	e->runs = 0;
+	e->scheds = 0;
+	e->clocks = 0;
+
 	/* Step 3: Use 'load_icode' to load the image from 'binary', and insert 'e' into
 	 * 'env_sched_list' using 'TAILQ_INSERT_HEAD'. */
 	/* Exercise 3.7: Your code here. (3/3) */
@@ -489,6 +494,13 @@ void env_run(struct Env *e) {
 	/* Exercise 3.8: Your code here. (2/2) */
 	env_pop_tf(&curenv->env_tf, curenv->env_asid);
 
+}
+
+void env_stat(struct Env *e, u_int *pri, u_int *scheds, u_int *runs, u_int *clocks) {
+	*pri = e->env_pri;
+	*scheds = e->scheds;
+	*runs = e->runs;
+	*clocks = e->clocks;
 }
 
 void env_check() {
