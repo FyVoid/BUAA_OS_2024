@@ -3,6 +3,9 @@
 
 // OS error codes.
 
+// extra
+#define E_NO_MSG 14
+
 // Unspecified or unknown problem
 #define E_UNSPECIFIED 1
 
