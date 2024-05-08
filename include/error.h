@@ -1,6 +1,8 @@
 #ifndef _ERROR_H_
 #define _ERROR_H_
 
+#define E_SEM_NOT_OPEN 14
+
 // OS error codes.
 
 // Unspecified or unknown problem

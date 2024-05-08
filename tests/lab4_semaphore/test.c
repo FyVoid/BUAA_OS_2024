@@ -8,7 +8,7 @@ static void os_assert(int cond, const char *err) {
 
 int main() {
 	sem_open(1, 1);
-
+	debugf("hello\n");
 	os_assert(sem_wait(2) != 0, "ERROR: RETURNING 0 WHEN SEM DOES NOT EXIST");
 	os_assert(sem_wait(2) == -14, "ERROR: NOT RETURNING CORRECT ERROR CODE");
 	os_assert(sem_wait(1) == 0, "ERROR: NOT RETURNING 0 WHEN CORRECT WAIT");
