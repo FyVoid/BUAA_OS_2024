@@ -80,6 +80,7 @@ void mips_vm_init() {
 	 * physical address `pages` allocated before. For consideration of alignment,
 	 * you should round up the memory size before map. */
 	pages = (struct Page *)alloc(npage * sizeof(struct Page), PAGE_SIZE, 1);
+	printk("page count: %d\n", npage);
 	printk("to memory %x for struct Pages.\n", freemem);
 	printk("pmap.c:\t mips vm init success\n");
 }
