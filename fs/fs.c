@@ -520,6 +520,7 @@ int dir_lookup(struct File *dir, char *name, struct File **file) {
 			if (strcmp(f->f_name, name) == 0) {
 				*file = f;
 				f->f_dir = dir;
+				return 0;
 			}
 
 		}
