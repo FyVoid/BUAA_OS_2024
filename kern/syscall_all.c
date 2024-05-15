@@ -507,6 +507,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
  *  You can use function 'ioread32', 'ioread16' and 'ioread8' to read data from device.
  */
 int sys_read_dev(u_int va, u_int pa, u_int len) {
+	printk("hello");
 	/* Exercise 5.1: Your code here. (2/2) */
 	if (is_illegal_va_range(va, len)) return -E_INVAL;
 
@@ -525,7 +526,7 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 	} else {
 		return -E_INVAL;
 	}
-	
+
 	return 0;
 }
 
