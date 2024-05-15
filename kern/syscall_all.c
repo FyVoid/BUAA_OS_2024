@@ -472,8 +472,8 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 
 	if (is_illegal_va_range(va, len)) return -E_INVAL;
 
-	if (!(	(pa >= 0x180003f8 && pa + len < 0x180003f8 + 0x20)
-		||  (pa >= 0x180001f0 && pa + len < 0x180001f0 + 0x8)
+	if (!(	((pa >= 0x180003f8) && (pa + len < 0x180003f8 + 0x20))
+		||  ((pa >= 0x180001f0) && (pa + len < 0x180001f0 + 0x8))
 		)) {
 			return -E_INVAL;
 		}
@@ -510,8 +510,8 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 	/* Exercise 5.1: Your code here. (2/2) */
 	if (is_illegal_va_range(va, len)) return -E_INVAL;
 
-	if (!(	(pa >= 0x180003f8 && pa + len < 0x180003f8 + 0x20)
-		||  (pa >= 0x180001f0 && pa + len < 0x180001f0 + 0x8)
+	if (!(	((pa >= 0x180003f8) && (pa + len < 0x180003f8 + 0x20))
+		||  ((pa >= 0x180001f0) && (pa + len < 0x180001f0 + 0x8))
 		)) {
 			return -E_INVAL;
 	}
