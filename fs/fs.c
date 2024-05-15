@@ -412,7 +412,7 @@ int file_block_walk(struct File *f, u_int filebno, uint32_t **ppdiskbno, u_int a
 int file_map_block(struct File *f, u_int filebno, u_int *diskbno, u_int alloc) {
 	int r;
 	uint32_t *ptr;
-	printk("map blk\n");
+	debugf("map blk\n");
 
 	// Step 1: find the pointer for the target block.
 	if ((r = file_block_walk(f, filebno, &ptr, alloc)) < 0) {
