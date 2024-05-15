@@ -470,7 +470,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 	/* Exercise 5.1: Your code here. (1/2) */
 	if (!(len == 1 || len == 2 || len == 4)) return -E_INVAL;
 
-	if (is_illegal_va_range(va, len)) return -E_INVAL;
+	if (!is_illegal_va_range(va, len)) return -E_INVAL;
 
 	if (!(	(pa >= 0x180003f8 && pa < 0x180003f8 + 0x20)
 		||  (pa >= 0x180001f0 && pa < 0x180001f0 + 0x8)
@@ -508,7 +508,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
  */
 int sys_read_dev(u_int va, u_int pa, u_int len) {
 	/* Exercise 5.1: Your code here. (2/2) */
-	if (is_illegal_va_range(va, len)) return -E_INVAL;
+	if (!is_illegal_va_range(va, len)) return -E_INVAL;
 
 	if (!(	(pa >= 0x180003f8 && pa + len < 0x180003f8 + 0x20)
 		||  (pa >= 0x180001f0 && pa + len < 0x180001f0 + 0x8)
@@ -517,8 +517,8 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 		}
 
 	if (len == 1) {
-		// *((uint8_t *) va) = ioread8(pa);
-		memcpy((void *) va, ioread8(pa), 1);
+		*((uint8_t *) va) = ioread8(pa);
+		// memcpy((void *) va, ioread8(pa), 1);
 	} else if (len == 2) {
 		*((uint16_t *) va) = ioread16(pa);
 	} else if (len == 4) {
