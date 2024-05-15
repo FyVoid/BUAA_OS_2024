@@ -500,7 +500,7 @@ int dir_lookup(struct File *dir, char *name, struct File **file) {
 	// Step 1: Calculate the number of blocks in 'dir' via its size.
 	u_int nblock;
 	/* Exercise 5.8: Your code here. (1/3) */
-	nblock = dir->f_size * BLOCK_SIZE;
+	nblock = dir->f_size / BLOCK_SIZE;
 
 	// Step 2: Iterate through all blocks in the directory.
 	for (int i = 0; i < nblock; i++) {
