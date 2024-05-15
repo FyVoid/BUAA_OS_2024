@@ -478,7 +478,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 			return -E_INVAL;
 		}
 
-	printk("calling %u %u %u\n", va, pa, len);
+	printk("calling %x %x %u\n", va, pa, len);
 	if (len == 1) {
 		iowrite8(*((uint8_t *) va), pa);
 	} else if (len == 2) {
