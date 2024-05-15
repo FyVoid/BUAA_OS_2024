@@ -144,7 +144,9 @@ int map_block(u_int blockno) {
 	// Step 2: Alloc a page in permission 'PTE_D' via syscall.
 	// Hint: Use 'disk_addr' for the virtual address.
 	/* Exercise 5.7: Your code here. (2/5) */
-	syscall_mem_alloc(0, disk_addr(blockno), PTE_D);
+	panic_on(syscall_mem_alloc(0, disk_addr(blockno), PTE_D));
+
+	return 0;
 
 }
 
@@ -194,7 +196,7 @@ void free_block(u_int blockno) {
 	// You can refer to the function 'block_is_free' above.
 	// Step 1: If 'blockno' is invalid (0 or >= the number of blocks in 'super'), return.
 	/* Exercise 5.4: Your code here. (1/2) */
-	if (super == 0 || blockno >= super->s_nblocks) return;
+	if (blockno == 0 || blockno >= super->s_nblocks) return;
 
 	// Step 2: Set the flag bit of 'blockno' in 'bitmap'.
 	// Hint: Use bit operations to update the bitmap, such as b[n / W] |= 1 << (n % W).
