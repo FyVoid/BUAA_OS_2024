@@ -487,6 +487,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 	} else {
 		return -E_INVAL;
 	}
+
 	return 0;
 }
 
@@ -524,6 +525,7 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 	} else {
 		return -E_INVAL;
 	}
+	
 	return 0;
 }
 

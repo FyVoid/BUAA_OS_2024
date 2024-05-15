@@ -72,5 +72,6 @@ int syscall_write_dev(void *va, u_int dev, u_int size) {
 
 int syscall_read_dev(void *va, u_int dev, u_int size) {
 	/* Exercise 5.2: Your code here. (2/2) */
+	debugf("hello");
 	return msyscall(SYS_read_dev, va, dev, size);
 }
