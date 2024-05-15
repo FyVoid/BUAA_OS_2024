@@ -197,7 +197,7 @@ int read(int fdnum, void *buf, u_int n) {
 	// Step 2: Check the open mode in 'fd'.
 	// Return -E_INVAL if the file is opened for writing only (O_WRONLY).
 	/* Exercise 5.10: Your code here. (2/4) */
-	if (fd->fd_omode == O_WRONLY) return -E_INVAL;
+	if ((fd->fd_omode & O_ACCMODE) == O_WRONLY) return -E_INVAL;
 
 	// Step 3: Read from 'dev' into 'buf' at the seek position (offset in 'fd').
 	/* Exercise 5.10: Your code here. (3/4) */
@@ -209,7 +209,7 @@ int read(int fdnum, void *buf, u_int n) {
 	 *  use. */
 	/* Exercise 5.10: Your code here. (4/4) */
 	if (r > 0) {
-		fd->fd_offset -= r;
+		fd->fd_offset += r;
 	}
 
 	return r;
