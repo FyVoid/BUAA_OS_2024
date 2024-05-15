@@ -530,6 +530,7 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 	} else {
 		return -E_INVAL;
 	}
+	printk("%u\n", va);
 	*((uint32_t *) va) = tmp;
 
 	return 0;
