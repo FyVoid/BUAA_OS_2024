@@ -218,7 +218,7 @@ struct File *create_file(struct File *dirf) {
 		if (i < NDIRECT) {
 			bno = dirf->f_direct[i];
 		} else {
-			bno = *((uint32_t *) dirf->f_indirect + i); 
+			bno = *(((uint32_t *) dirf->f_indirect) + i); 
 		}
 
 		// Get the directory block using the block number.
@@ -239,7 +239,7 @@ struct File *create_file(struct File *dirf) {
 	// Step 2: If no unused file is found, allocate a new block using 'make_link_block' function
 	// and return a pointer to the new block on 'disk'.
 	/* Exercise 5.5: Your code here. (3/3) */
-	return (File *) disk[make_link_block(dirf, nblk)].data;
+	return (struct File *) disk[make_link_block(dirf, nblk)].data;
 
 	// return NULL;
 }
