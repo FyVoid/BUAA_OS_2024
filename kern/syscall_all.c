@@ -517,7 +517,8 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 		}
 
 	if (len == 1) {
-		*((volatile uint8_t *) va) = ioread8(pa);
+		// *((uint8_t *) va) = ioread8(pa);
+		memcpy((void *) va, ioread8(pa), 1);
 	} else if (len == 2) {
 		*((uint16_t *) va) = ioread16(pa);
 	} else if (len == 4) {
