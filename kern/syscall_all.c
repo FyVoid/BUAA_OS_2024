@@ -479,11 +479,11 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 		}
 
 	if (len == 1) {
-		iowrite8(*((int8_t*) va), pa);
+		iowrite8(*((u_int8_t*) va), pa);
 	} else if (len == 2) {
-		iowrite16(*((int16_t*) va), pa);
+		iowrite16(*((u_int16_t*) va), pa);
 	} else if (len == 4) {
-		iowrite32(*((int32_t*) va), pa);
+		iowrite32(*((u_int32_t*) va), pa);
 	} else {
 		return -E_INVAL;
 	}
@@ -516,11 +516,11 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 		}
 
 	if (len == 1) {
-		*((int8_t*) va) = ioread8(pa);
+		*((u_int8_t*) va) = ioread8(pa);
 	} else if (len == 2) {
-		*((int16_t*) va) = ioread16(pa);
+		*((u_int16_t*) va) = ioread16(pa);
 	} else if (len == 4) {
-		*((int32_t*) va) = ioread32(pa);
+		*((u_int32_t*) va) = ioread32(pa);
 	} else {
 		return -E_INVAL;
 	}
