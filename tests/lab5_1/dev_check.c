@@ -20,7 +20,6 @@ int main() {
 		} else {
 			c = 0;
 		}
-		debugf("%u\n", c);
 		if (c == '\r') {
 			break;
 		}
