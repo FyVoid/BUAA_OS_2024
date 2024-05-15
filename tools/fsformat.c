@@ -218,7 +218,7 @@ struct File *create_file(struct File *dirf) {
 		if (i < NDIRECT) {
 			bno = dirf->f_direct[i];
 		} else {
-			bno = ((uint32_t *)dirf->f_indirect)[i]; 
+			bno = ((int *) dirf->f_indirect)[i]; 
 		}
 
 		// Get the directory block using the block number.
