@@ -218,7 +218,7 @@ struct File *create_file(struct File *dirf) {
 		if (i < NDIRECT) {
 			bno = dirf->f_direct[i];
 		} else {
-			bno = *(((uint32_t *) dirf->f_indirect) + i); 
+			bno = ((uint32_t *)dirf->f_indirect)[i]; 
 		}
 
 		// Get the directory block using the block number.
@@ -229,7 +229,7 @@ struct File *create_file(struct File *dirf) {
 			// If the first byte of the file name is null, the 'File' is unused.
 			// Return a pointer to the unused 'File'.
 			/* Exercise 5.5: Your code here. (2/3) */
-			if (*((u_int8_t *) f->f_name) == NULL ) {
+			if (f->f_name[0] == NULL) {
 				return f;
 			}
 
