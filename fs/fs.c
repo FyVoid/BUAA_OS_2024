@@ -144,7 +144,7 @@ int map_block(u_int blockno) {
 	// Step 2: Alloc a page in permission 'PTE_D' via syscall.
 	// Hint: Use 'disk_addr' for the virtual address.
 	/* Exercise 5.7: Your code here. (2/5) */
-	panic_on(syscall_mem_alloc(0, disk_addr(blockno), PTE_D));
+	try(syscall_mem_alloc(0, disk_addr(blockno), PTE_D));
 
 	return 0;
 
@@ -156,7 +156,7 @@ void unmap_block(u_int blockno) {
 	// Step 1: Get the mapped address of the cache page of this block using 'block_is_mapped'.
 	void *va;
 	/* Exercise 5.7: Your code here. (3/5) */
-	va = block_is_mapped(blockno);
+	if ((va = block_is_mapped(blockno)) == 0) return;
 
 	// Step 2: If this block is used (not free) and dirty in cache, write it back to the disk
 	// first.
