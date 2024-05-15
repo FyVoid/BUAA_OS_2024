@@ -122,7 +122,7 @@ int read_block(u_int blockno, void **blk, u_int *isnew) {
 		if (isnew) {
 			*isnew = 1;
 		}
-		try(syscall_mem_alloc(0, va, PTE_D));
+		panic_on((syscall_mem_alloc(0, va, PTE_D)));
 		ide_read(0, blockno * SECT2BLK, va, SECT2BLK);
 	}
 
@@ -505,7 +505,7 @@ int dir_lookup(struct File *dir, char *name, struct File **file) {
 		// Read the i'th block of 'dir' and get its address in 'blk' using 'file_get_block'.
 		void *blk;
 		/* Exercise 5.8: Your code here. (2/3) */
-		try(file_get_block(dir, i, &blk));
+		panic_on((file_get_block(dir, i, &blk)));
 
 		struct File *files = (struct File *)blk;
 
