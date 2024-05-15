@@ -517,11 +517,11 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 		}
 
 	if (len == 1) {
-		*((uint8_t*) va) = ioread8(pa);
+		*((volatile uint8_t *) va) = ioread8(pa);
 	} else if (len == 2) {
-		*((uint16_t*) va) = ioread16(pa);
+		*((uint16_t *) va) = ioread16(pa);
 	} else if (len == 4) {
-		*((uint32_t*) va) = ioread32(pa);
+		*((uint32_t *) va) = ioread32(pa);
 	} else {
 		return -E_INVAL;
 	}

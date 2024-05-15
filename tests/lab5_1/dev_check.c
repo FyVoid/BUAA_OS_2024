@@ -20,7 +20,6 @@ int main() {
 		} else {
 			c = 0;
 		}
-		debugf("what");
 		if (c == '\r') {
 			break;
 		}
