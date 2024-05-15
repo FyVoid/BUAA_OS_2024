@@ -412,7 +412,6 @@ int file_block_walk(struct File *f, u_int filebno, uint32_t **ppdiskbno, u_int a
 int file_map_block(struct File *f, u_int filebno, u_int *diskbno, u_int alloc) {
 	int r;
 	uint32_t *ptr;
-	debugf("map blk\n");
 
 	// Step 1: find the pointer for the target block.
 	if ((r = file_block_walk(f, filebno, &ptr, alloc)) < 0) {
@@ -508,7 +507,7 @@ int dir_lookup(struct File *dir, char *name, struct File **file) {
 		// Read the i'th block of 'dir' and get its address in 'blk' using 'file_get_block'.
 		void *blk;
 		/* Exercise 5.8: Your code here. (2/3) */
-		panic_on((file_get_block(dir, i, &blk)));
+		try((file_get_block(dir, i, &blk)));
 
 		struct File *files = (struct File *)blk;
 
