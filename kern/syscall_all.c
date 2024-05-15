@@ -478,6 +478,7 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 			return -E_INVAL;
 		}
 
+	printk("what\n");
 	if (len == 1) {
 		iowrite8(*((uint8_t *) va), pa);
 	} else if (len == 2) {
