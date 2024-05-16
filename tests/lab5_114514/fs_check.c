@@ -4,7 +4,7 @@
 int main() {
 	fs_init();
 	char buffer[256];
-	int fd_num = open("/newmotd", O_RDWR);
+	int fd_num = file_open("/newmotd", O_RDONLY);
 	int bytes;
 	if (fork() == 0) {
 		bytes = read(fd_num, buffer, 8);
