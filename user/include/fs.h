@@ -6,7 +6,7 @@
 // File nodes (both in-memory and on-disk)
 
 // Bytes per file system block - same as page size
-#define BLOCK_SIZE PAGE_SIZE
+#define FBLOCK_SIZE PAGE_SIZE
 #define BLOCK_SIZE_BIT (BLOCK_SIZE * 8)
 
 // Maximum size of a filename (a single path component), including null
