@@ -7,9 +7,9 @@ int main() {
 	int bytes;
 	if (fork() == 0) {
 		bytes = read(fd_num, buffer, 8);
-		writef("[child] buffer is \'%s\'\n", buffer);
+		debugf("[child] buffer is \'%s\'\n", buffer);
 	} else {
 		bytes = read(fd_num, buffer, 8);
-		writef("[father] buffer is \'%s\'\n", buffer);
+		debugf("[father] buffer is \'%s\'\n", buffer);
 	}
 }
