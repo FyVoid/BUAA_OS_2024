@@ -6,10 +6,12 @@ int main() {
 	int fd_num = open("/newmotd", O_RDONLY);
 	int bytes;
 	if (fork() == 0) {
+		debugf("child\n");
 		bytes = read(fd_num, buffer, 8);
 		debugf("child buffer: %s\n", buffer);
 	} else {
+		debugf("parent\n");
 		bytes = read(fd_num, buffer, 8);
-		debugf("father buffer: %s\n", buffer);
+		debugf("parent buffer: %s\n", buffer);
 	}
 }
