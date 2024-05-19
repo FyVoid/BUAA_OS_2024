@@ -13,3 +13,5 @@ endif
 ifeq ($(call lab-ge,4), true)
 	targets     += syscall_all.o
 endif
+
+targets += vga.o

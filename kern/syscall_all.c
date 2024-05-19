@@ -5,6 +5,7 @@
 #include <printk.h>
 #include <sched.h>
 #include <syscall.h>
+#include <vga.h>
 
 extern struct Env *curenv;
 
@@ -474,6 +475,8 @@ int sys_write_dev(u_int va, u_int pa, u_int len) {
 
 	if (!(	((pa >= 0x180003f8) && (pa + len <= 0x180003f8 + 0x20))
 		||  ((pa >= 0x180001f0) && (pa + len <= 0x180001f0 + 0x8))
+		||	((pa >= VGA_BEGIN_ADDR_128) && (pa <= VGA_END_ADDR_128))
+		||	((pa >= VGA_STD2QEMU(BEGIN_VGA_IOPORT) && (pa <= VGA_STD2QEMU(END_VGA_IOPORT))))
 		)) {
 			return -E_INVAL;
 		}
@@ -513,6 +516,8 @@ int sys_read_dev(u_int va, u_int pa, u_int len) {
 
 	if (!(	((pa >= 0x180003f8) && (pa + len <= 0x180003f8 + 0x20))
 		||  ((pa >= 0x180001f0) && (pa + len <= 0x180001f0 + 0x8))
+		||	((pa >= VGA_BEGIN_ADDR_128) && (pa <= VGA_END_ADDR_128))
+		||	((pa >= VGA_STD2QEMU(BEGIN_VGA_IOPORT) && (pa <= VGA_STD2QEMU(END_VGA_IOPORT))))
 		)) {
 			return -E_INVAL;
 	}

@@ -27,11 +27,13 @@ ifeq ($(call lab-ge,5),true)
 	targets         += fs-image
 endif
 
+user_modules += vga
+
 objects                 := $(addsuffix /*.o, $(modules)) $(addsuffix /*.x, $(user_modules))
 modules                 += $(user_modules)
 
 CFLAGS                  += -DLAB=$(shell echo $(lab) | cut -f1 -d_)
-QEMU_FLAGS              += -cpu 4Kc -m 64 -vga std -M malta \
+QEMU_FLAGS              += -cpu 4Kc -m 64 -device VGA -M malta \
 						$(shell [ -f '$(user_disk)' ] && echo '-drive id=ide0,file=$(user_disk),if=ide,format=raw') \
 						$(shell [ -f '$(empty_disk)' ] && echo '-drive id=ide1,file=$(empty_disk),if=ide,format=raw') \
 						-no-reboot
@@ -61,6 +63,9 @@ $(modules): tools
 
 $(mos_elf): $(modules) $(target_dir)
 	$(LD) $(LDFLAGS) -o $(mos_elf) -N -T $(link_script) $(objects)
+
+vga: $(target_dir) user
+	$(MAKE) --directory=vga
 
 fs-image: $(target_dir) user
 	$(MAKE) --directory=fs image fs-files="$(addprefix ../, $(fs-files))"
