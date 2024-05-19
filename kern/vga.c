@@ -1,20 +1,20 @@
 #include <vga.h>
 
-void sys_vga_write_index_reg(u_char addr, u_char index, u_char value) {
-    uint16_t v = (value << 8) + index;
+void sys_vga_write_index_reg(uint32_t addr, u_char index, u_char value) {
+    uint16_t v = (((uint16_t) value) << 8) + index;
     iowrite16(v, VGA_STD2QEMU(addr));
 }
 
-void sys_vga_write_reg(u_char addr, u_char value) {
+void sys_vga_write_reg(uint32_t addr, u_char value) {
     iowrite8(value, VGA_STD2QEMU(addr));
 }
 
-u_char sys_vga_read_index_reg(u_char addr, u_char index) {
+u_char sys_vga_read_index_reg(uint32_t addr, u_char index) {
     iowrite8(index, VGA_STD2QEMU(addr));
     return ioread8(VGA_STD2QEMU(addr + 1));    
 }
 
-u_char sys_vga_read_reg(u_char addr) {
+u_char sys_vga_read_reg(uint32_t addr) {
     return ioread8(VGA_STD2QEMU(addr));
 }
 

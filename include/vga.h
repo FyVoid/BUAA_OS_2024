@@ -9,7 +9,7 @@
 #define BEGIN_VGA_IOPORT                            0x30c
 #define END_VGA_IOPORT                              0x3df
 
-#define VGA_STD2QEMU(x)                             (x + IOPORT_OFFSET)
+#define VGA_STD2QEMU(x)                             (x + 0)
 
 // Registers
 
@@ -101,10 +101,10 @@
 #define VGA_BEGIN_ADDR_32_2                         0xB8000
 #define VGA_END_ADDR_32_2                           0xBFFFF
 
-void sys_vga_write_index_reg(u_char addr, u_char index, u_char value);
-void sys_vga_write_reg(u_char addr, u_char value);
-u_char sys_vga_read_index_reg(u_char addr, u_char index);
-u_char sys_vga_read_reg(u_char addr);
+void sys_vga_write_index_reg(uint32_t addr, u_char index, u_char value);
+void sys_vga_write_reg(uint32_t addr, u_char value);
+u_char sys_vga_read_index_reg(uint32_t addr, u_char index);
+u_char sys_vga_read_reg(uint32_t addr);
 void set_display_mode();
 void set_video_memory();
 void set_timing_parameters();
