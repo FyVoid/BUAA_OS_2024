@@ -3,6 +3,8 @@
 
 // OS error codes.
 
+#define  E_ACT_ENV_NUM_EXCEED 14
+
 // Unspecified or unknown problem
 #define E_UNSPECIFIED 1
 

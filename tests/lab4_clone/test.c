@@ -28,6 +28,7 @@ void check() {
 
 int main() {
 	u_int child_stack = 0x7f3fd800;
+	debugf("hello");
 	syscall_clone((void *)check, (void *)child_stack);
 	strcpy(buf, input);
 	flag = 1;
