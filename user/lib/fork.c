@@ -132,7 +132,7 @@ int fork(void) {
 	// Hint: You should use 'duppage'.
 	/* Exercise 4.15: Your code here. (1/2) */
 	for (u_long i = 0; i < VPN(USTACKTOP); i++) {
-		if ((vpt[i] & PTE_V) && (vpd[i >> 10] & PTE_V)) {
+		if ((vpd[i >> 10] & PTE_V) && (vpt[i] & PTE_V)) {
 			duppage(child, i);
 		}
 	}
