@@ -19,6 +19,7 @@ void strace_send(int sysno) {
 	// Your code here. (1/2)
 	if (straced != 0) {
 		int tmp = straced;
+		straced = 0;
 		ipc_send(env->env_parent_id, sysno, 0, 0);
 		// syscall_ipc_try_send(env->env_parent_id, sysno, 0, 0);
 		syscall_set_env_status(env->env_id, ENV_NOT_RUNNABLE);	
@@ -31,8 +32,8 @@ void strace_recv() {
 	int sysno;
 	u_int id = 0;
 	// debugf("hello");
-	while ((sysno = ipc_recv(&id, 0, 0)) == 0) {
-		// debugf("%x\n", id);
+	while (1) {
+		sysno = ipc_recv(&id, 0, 0);
 		strace_barrier(id);
 		recv_sysno(id, sysno);
 		syscall_set_env_status(id, ENV_RUNNABLE);
