@@ -66,7 +66,7 @@ void serve_chmod(u_int envid, struct Fsreq_chmod *req) {
 		ipc_send(envid, r, 0, 0);
 		return;
 	}
-	debugf("before: %x\n", file->f_mode);
+	//debugf("before: %x\n", file->f_mode);
 	int type = req->req_type;
 	if (type == 0) {
 		file->f_mode = req->req_mode;
@@ -75,7 +75,7 @@ void serve_chmod(u_int envid, struct Fsreq_chmod *req) {
 	} else if (type == 2) {
 		file->f_mode &= ~req->req_mode;
 	}
-	debugf("after: %x\n", file->f_mode);
+	//debugf("after: %x\n", file->f_mode);
 	file_close(file);
 	ipc_send(envid, 0, 0, 0);
 }
@@ -187,7 +187,7 @@ void serve_open(u_int envid, struct Fsreq_open *rq) {
 	}
 
 	if ((f->f_mode & rq->req_omode) == 0) {
-//			debugf("serve_open\n");
+	//		debugf("serve_open\n");
 		ipc_send(envid, -E_PERM_DENY, 0, 0);
 		return ;
 	}

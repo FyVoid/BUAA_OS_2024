@@ -279,6 +279,7 @@ int fstat(int fdnum, struct Stat *stat) {
 	stat->st_size = 0;
 	stat->st_isdir = 0;
 	stat->st_dev = dev;
+	// debugf("called");
 	return (*dev->dev_stat)(fd, stat);
 }
 
