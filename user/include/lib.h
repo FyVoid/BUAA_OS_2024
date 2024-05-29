@@ -13,6 +13,9 @@
 #define envs ((const volatile struct Env *)UENVS)
 #define pages ((const volatile struct Page *)UPAGES)
 
+int fsipc_chmod(const char *, u_int, int);
+int chmod(const char *path, u_int mode, int type);
+
 // libos
 void exit(void) __attribute__((noreturn));
 

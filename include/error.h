@@ -3,6 +3,8 @@
 
 // OS error codes.
 
+#define E_PERM_DENY 14
+
 // Unspecified or unknown problem
 #define E_UNSPECIFIED 1
 

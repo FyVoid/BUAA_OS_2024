@@ -58,6 +58,28 @@ void serve_init(void) {
 	}
 }
 
+void serve_chmod(u_int envid, struct Fsreq_chmod *req) {
+	int r;
+	struct File *file;
+	r = file_open(req->req_path, &file);
+	if (r < 0) {
+		ipc_send(envid, r, 0, 0);
+		return;
+	}
+	debugf("before: %x\n", file->f_mode);
+	int type = req->req_type;
+	if (type == 0) {
+		file->f_mode = req->req_mode;
+	} else if (type == 1) {
+		file->f_mode |= req->req_mode;
+	} else if (type == 2) {
+		file->f_mode &= ~req->req_mode;
+	}
+	debugf("after: %x\n", file->f_mode);
+	file_close(file);
+	ipc_send(envid, 0, 0, 0);
+}
+
 /*
  * Overview:
  *  Allocate an open file.
@@ -162,6 +184,12 @@ void serve_open(u_int envid, struct Fsreq_open *rq) {
 	if ((r = file_open(rq->req_path, &f)) < 0) {
 		ipc_send(envid, r, 0, 0);
 		return;
+	}
+
+	if ((f->f_mode & rq->req_omode) == 0) {
+//			debugf("serve_open\n");
+		ipc_send(envid, -E_PERM_DENY, 0, 0);
+		return ;
 	}
 
 	// Save the file pointer.
@@ -344,7 +372,7 @@ void serve_sync(u_int envid) {
 void *serve_table[MAX_FSREQNO] = {
     [FSREQ_OPEN] = serve_open,	 [FSREQ_MAP] = serve_map,     [FSREQ_SET_SIZE] = serve_set_size,
     [FSREQ_CLOSE] = serve_close, [FSREQ_DIRTY] = serve_dirty, [FSREQ_REMOVE] = serve_remove,
-    [FSREQ_SYNC] = serve_sync,
+    [FSREQ_SYNC] = serve_sync, [FSREQ_CHMOD] = serve_chmod,
 };
 
 /*

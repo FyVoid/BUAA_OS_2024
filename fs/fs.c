@@ -501,6 +501,11 @@ int dir_lookup(struct File *dir, char *name, struct File **file) {
 	u_int nblock;
 	/* Exercise 5.8: Your code here. (1/3) */
 	nblock = dir->f_size / BLOCK_SIZE;
+	
+	if ((dir->f_mode & FMODE_X) == 0) {
+	//		debugf("dir_lookup\n");
+		return -E_PERM_DENY;
+	}
 
 	// Step 2: Iterate through all blocks in the directory.
 	for (int i = 0; i < nblock; i++) {
@@ -673,6 +678,8 @@ int file_create(char *path, struct File **file) {
 		return -E_FILE_EXISTS;
 	}
 
+	if ((dir->f_mode & FMODE_W) == 0) return -E_PERM_DENY;
+
 	if (r != -E_NOT_FOUND || dir == 0) {
 		return r;
 	}
@@ -682,6 +689,7 @@ int file_create(char *path, struct File **file) {
 	}
 
 	strcpy(f->f_name, name);
+	f->f_mode = FMODE_ALL;
 	*file = f;
 	return 0;
 }
@@ -791,6 +799,8 @@ void file_close(struct File *f) {
 int file_remove(char *path) {
 	int r;
 	struct File *f;
+
+	if ((f->f_dir->f_mode & FMODE_W) == 0) return -E_PERM_DENY;
 
 	// Step 1: find the file on the disk.
 	if ((r = walk_path(path, 0, &f, 0)) < 0) {
