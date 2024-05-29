@@ -43,6 +43,7 @@ void test_copy_read(char *copy_src, char *copy_dst, char *src_file, char *dst_fi
 }
 
 int main() {
+	debugf("running");
 	test_copy_read(path_src, path_dst, file_src, file_dst, "hello world");
 	return 0;
 }
