@@ -19,11 +19,11 @@ int copy_file_content(struct File *src, struct File *dst) {
 	  try(file_get_block(src, i, &src_blk));
 	  try(file_get_block(dst, i, &dst_blk));
 
-		struct File * files = (struct File *) dst_blk;
-		struct File * src_files = (struct File *) src_blk;
-		for (struct File *f = src_files; f < src_files + FILE2BLK; f++) {
-			*files = *f;
-			files++;
+		struct File * dst_file = (struct File *) dst_blk;
+		struct File * src_file = (struct File *) src_blk;
+		for (int j = 0; j < FILE2BLK; j++) {
+			dst_file[j] = src_file[j];
+			// files++;
 		//*file = *(struct File *)src_blk;
 		}
 		file_dirty(dst, i);
