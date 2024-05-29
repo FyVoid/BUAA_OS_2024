@@ -21,12 +21,12 @@ int copy_file_content(struct File *src, struct File *dst) {
 
 		struct File * files = (struct File *) dst_blk;
 		struct File * src_files = (struct File *) src_blk;
-		for (struct File *f = files; f < files + FILE2BLK; f++) {
-			*f = *src_files;
-			src_files++;
+		for (struct File *f = src_files; f < src_files + FILE2BLK; f++) {
+			*files = *f
+			files++;
 		//*file = *(struct File *)src_blk;
 		}
-		file_dirty((struct File *)dst_blk, i);
+		file_dirty(dst, i);
    }
    // Flush the changes to the destination file
    file_flush(dst);
