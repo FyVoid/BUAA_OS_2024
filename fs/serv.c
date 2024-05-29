@@ -186,10 +186,17 @@ void serve_open(u_int envid, struct Fsreq_open *rq) {
 		return;
 	}
 
-	if ((f->f_mode & rq->req_omode) == 0) {
-	//		debugf("serve_open\n");
-		ipc_send(envid, -E_PERM_DENY, 0, 0);
-		return ;
+	int open_mode = rq->omode;
+	int bad = 0;
+	if (open_mode == O_RDONLY) {
+		if ((f->f_mode & 0x4) == 0) bad = 1;
+	} else if (open_mode == O_WRONLY) {
+		if ((f->f_mode & 0x2) == 0) bad = 1;
+	} else {
+		if ((f->f_mode & 0x6) == 0) bad = 1;
+	}
+	if (bad) {
+		ipc_send(envid, -14, 0, 0);
 	}
 
 	// Save the file pointer.
