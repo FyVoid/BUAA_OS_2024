@@ -91,12 +91,12 @@ int parsecmd(char **argv, int *rightpipe) {
 			// utilize 'debugf' to print relevant messages,
 			// and subsequently terminate the process using 'exit'.
 			/* Exercise 6.5: Your code here. (1/3) */
-			if (open(t, O_RDONLY) < 0) {
+			if ((fd = open(t, O_RDONLY)) < 0) {
 				debugf("error opening\n");
 				exit();
 			}
-			dup(t, 0);
-			close(t);
+			dup(fd, 0);
+			close(fd);
 			break;
 
 			user_panic("< redirection not implemented");
@@ -113,12 +113,12 @@ int parsecmd(char **argv, int *rightpipe) {
 			// utilize 'debugf' to print relevant messages,
 			// and subsequently terminate the process using 'exit'.
 			/* Exercise 6.5: Your code here. (2/3) */
-			if (open(t, O_WRONLY) < 0) {
+			if ((fd = open(t, O_WRONLY)) < 0) {
 				debugf("error opening\n");
 				exit();
 			}
-			dup(t, 1);
-			close(t);
+			dup(fd, 1);
+			close(fd);
 			break;
 
 			user_panic("> redirection not implemented");
