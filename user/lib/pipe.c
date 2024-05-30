@@ -149,7 +149,7 @@ static int pipe_read(struct Fd *fd, void *vbuf, u_int n, u_int offset) {
 	while (1) {
 		if (i >= n) return i;
 		while (p->p_rpos >= p->p_wpos) {
-			if (i > 0 || (_pipe_is_closed(fd, p))) return i;
+			if (i > 0 || _pipe_is_closed(fd, p)) return i;
 			syscall_yield();
 		}
 
@@ -190,12 +190,12 @@ static int pipe_write(struct Fd *fd, const void *vbuf, u_int n, u_int offset) {
 	while (1) {
 		// check if pipe is full
 		if (i >= n) return i;
-		while (i || (p->p_wpos % PIPE_SIZE == 0)) {
+		while (p->p_wpos - p->p_rpos >= PIPE_SIZE) {
 			if (_pipe_is_closed(fd, p)) return i;
 			syscall_yield();
 		}
 
-		wbuf[i++] = p->p_buf[(p->p_wpos++) % PIPE_SIZE];
+		p->p_buf[(p->p_wpos++) % PIPE_SIZE] = wbuf[i++];
 	}
 
 	user_panic("pipe_write not implemented");
