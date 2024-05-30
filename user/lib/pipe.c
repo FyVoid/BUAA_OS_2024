@@ -107,6 +107,12 @@ static int _pipe_is_closed(struct Fd *fd, struct Pipe *p) {
 	// Keep retrying until 'env->env_runs' is unchanged before and after
 	// reading the reference counts.
 	/* Exercise 6.1: Your code here. (1/3) */
+	while (1) {
+		runs = env->env_runs;
+		fd_ref = pageref(fd);
+		pipe_ref = pageref(p);
+		if (runs == env->env_runs) break;
+	}
 
 	return fd_ref == pipe_ref;
 }
@@ -137,6 +143,18 @@ static int pipe_read(struct Fd *fd, void *vbuf, u_int n, u_int offset) {
 	//    of bytes read so far.
 	//  - Otherwise, keep yielding until the buffer isn't empty or the pipe is closed.
 	/* Exercise 6.1: Your code here. (2/3) */
+	p = (struct Pipe *) fd2data(fd);
+	i = 0;
+	rbuf = (char *) vbuf;
+	while (1) {
+		if (i >= n) return i;
+		if (p->p_rpos >= p->p_wpos) {
+			if (i || (_pipe_is_closed(fd, p))) return i;
+			syscall_yield();
+		}
+
+		rbuf[i++] = p->p_buf[(p->p_rpos++) % PIPE_SIZE];
+	}
 
 	user_panic("pipe_read not implemented");
 }
@@ -166,6 +184,19 @@ static int pipe_write(struct Fd *fd, const void *vbuf, u_int n, u_int offset) {
 	//  - If the pipe isn't closed, keep yielding until the buffer isn't full or the
 	//    pipe is closed.
 	/* Exercise 6.1: Your code here. (3/3) */
+	p = (struct Pipe *) fd2data(fd);
+	i = 0;
+	wbuf = (char *) vbuf;
+	while (1) {
+		// check if pipe is full
+		if (i >= n) return i;
+		if (i || (p->p_wpos % PIPE_SIZE == 0)) {
+			if (_pipe_is_closed(fd, p)) return i;
+			syscall_yield();
+		}
+
+		wbuf[i++] = p->p_buf[(p->p_wpos++) % PIPE_SIZE];
+	}
 
 	user_panic("pipe_write not implemented");
 
