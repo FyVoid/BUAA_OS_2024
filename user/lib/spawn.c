@@ -122,7 +122,7 @@ int spawn(char *prog, char **argv) {
 	int r;
 	u_char elfbuf[512];
 	/* Exercise 6.4: Your code here. (1/6) */
-	if (((r = readn(fd, elfbuf, sizeof(Elf32_Ehdr)) < 0)) || (r != sizeof(Elf32_Ehdr))) {
+	if ((r = readn(fd, elfbuf, sizeof(Elf32_Ehdr))) < 0 || (r != sizeof(Elf32_Ehdr))) {
 		goto err;
 	}
 
