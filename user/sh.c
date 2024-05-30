@@ -95,8 +95,8 @@ int parsecmd(char **argv, int *rightpipe) {
 				debugf("error opening\n");
 				exit();
 			}
-			dup(fd, 0);
-			close(fd);
+			dup(t, 0);
+			close(t);
 			break;
 
 			user_panic("< redirection not implemented");
@@ -117,8 +117,8 @@ int parsecmd(char **argv, int *rightpipe) {
 				debugf("error opening\n");
 				exit();
 			}
-			dup(fd, 1);
-			close(fd);
+			dup(t, 1);
+			close(t);
 			break;
 
 			user_panic("> redirection not implemented");
